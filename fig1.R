@@ -2,7 +2,7 @@ library(readxl)
 library(ggplot2)
 library(reshape2)
 
-exp2 <- read_excel("C:/Users/Nico/OneDrive/papers/Covid/covid-3/exp2.xls")
+exp2 <- read_excel("C:/Users/Nico/OneDrive/papers/Covid/covid-3/Data/exp2.xls")
 
 colnames(exp2)[colnames(exp2) == "draws"] ="drawsT"
 colnames(exp2)[colnames(exp2) == "femaledraws"] ="drawsF"
@@ -38,9 +38,12 @@ ggplot(subset(exdata, !is.na(exdata$value) & (exdata$treatment != 1) & (exdata$G
 # stat_summary(fun.data=data_summary, geom="pointrange", color="red") +
 # geom_dotplot(binaxis='y', stackdir='center', dotsize=1)
 
-exp1 <- read_excel("C:/Users/Nico/OneDrive/papers/Covid/covid-3/exp1.xls")
+exp1 <- read_excel("C:/Users/Nico/OneDrive/papers/Covid/covid-3/Data/exp1.xls")
 
-exp1$condition[exp1$condition == "Rec.+peer info"] <-  "Recommendation + information"
+exp1$condition[exp1$condition == "Rec.+peer info"] <-  "Information"
+
+exp1$female[exp1$female == "female"] = "Female"
+exp1$female[exp1$female == "male"] = "Male"
 
 ggplot(subset(exp1, !is.na(exp1$draws)), aes(x=factor(round), y=draws, fill=factor(female))) +
   geom_boxplot(alpha=0.3) +
@@ -50,4 +53,4 @@ ggplot(subset(exp1, !is.na(exp1$draws)), aes(x=factor(round), y=draws, fill=fact
   xlab("Round") +
   ylab("Draws") +
   facet_wrap(~condition, ncol=1) +
-  theme(legend.title = element_blank())
+  theme(legend.title = element_blank(), legend.position = "bottom")
