@@ -141,3 +141,4 @@ pretrained_models/
 # Custom
 *.dta
 *.xls
+!exp1.xls
